@@ -1,0 +1,30 @@
+name: dogs-vs-cats  # 實驗名稱
+
+data:
+  pachyderm:
+    host: host.docker.internal
+    port: 80
+    project: dogs-vs-cats
+    train_repo: train
+    test_repo: test
+    branch: master
+
+hyperparameters:
+  learning_rate:
+    type: log
+    minval: -4.0
+    maxval: -0.5
+    base: 10.0
+  global_batch_size: 16
+  weight_decay: 1e-4
+  nesterov: True
+
+searcher:  # 搜尋方式
+  name: random
+  metric: accuracy
+  max_trials: 4  # 最大嘗試次數
+  max_length:
+    batches: 2000 
+  smaller_is_better: false
+
+entrypoint: model_def:DogCatTrial
